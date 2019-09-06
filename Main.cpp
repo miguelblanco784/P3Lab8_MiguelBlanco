@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
 			}
 			case 4:{
 				string id;
-				cout<<"Ingrese su id";
+				cout<<"Ingrese su id: ";
 				cin>>id;
 				
 				string comando;
@@ -159,34 +159,55 @@ int main(int argc, char** argv) {
 				//listar		
 				error=sqlite3_open("oracle-sample.db",&conn);
 				error=sqlite3_prepare_v2(conn,comando.c_str(),1000,&res,&tail);
-				
+				string comando2, comando3;
 				if(sqlite3_step(res) == SQLITE_ROW){
-					string comando2;
 					string temp = (char*)sqlite3_column_text(res,0);
 					comando2 = "select * from emp where mgr = '"+temp+"'";
-					sqlite3_close(conn);
-					//listar		
-						error=sqlite3_open("oracle-sample.db",&conn);
-						error=sqlite3_prepare_v2(conn,comando2.c_str(),1000,&res,&tail);
-						while(sqlite3_step(res) == SQLITE_ROW){
-							cout<<"Empno: "<<sqlite3_column_text(res,0)<<endl;
-							cout<<"Ename: "<<sqlite3_column_text(res,1)<<endl;
-							cout<<"Job: "<<sqlite3_column_text(res,2)<<endl;
-							cout<<"Mgr: "<<sqlite3_column_text(res,3)<<endl;
-							cout<<"Hiredate: "<<sqlite3_column_text(res,4)<<endl;
-							cout<<"Sal: "<<sqlite3_column_text(res,5)<<endl;
-							cout<<"Comm: "<<sqlite3_column_text(res,6)<<endl;
-							cout<<"Deptno: "<<sqlite3_column_text(res,7)<<endl<<endl<<endl;
-						}	
-						sqlite3_close(conn);
-				}else{
 					
+					comando3 = "select * from emp where empno = '"+temp+"'";
+					
+				}else{
+					cout<<"No existe!"<<endl;	
 				}
-
+				sqlite3_close(conn);
+				
+				
+				cout<<endl<<"El manager es"<<endl;
+				//listar		
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_prepare_v2(conn,comando3.c_str(),1000,&res,&tail);
+				while(sqlite3_step(res) == SQLITE_ROW){
+					cout<<"Empno: "<<sqlite3_column_text(res,0)<<endl;
+					cout<<"Ename: "<<sqlite3_column_text(res,1)<<endl;
+					cout<<"Job: "<<sqlite3_column_text(res,2)<<endl;
+					cout<<"Mgr: "<<sqlite3_column_text(res,3)<<endl;
+					cout<<"Hiredate: "<<sqlite3_column_text(res,4)<<endl;
+					cout<<"Sal: "<<sqlite3_column_text(res,5)<<endl;
+					cout<<"Comm: "<<sqlite3_column_text(res,6)<<endl;
+					cout<<"Deptno: "<<sqlite3_column_text(res,7)<<endl<<endl<<endl;
+				}
+				
+				cout<<"Los empleados del manager son"<<endl;
+				//listar		
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_prepare_v2(conn,comando2.c_str(),1000,&res,&tail);
+				while(sqlite3_step(res) == SQLITE_ROW){
+					cout<<"Empno: "<<sqlite3_column_text(res,0)<<endl;
+					cout<<"Ename: "<<sqlite3_column_text(res,1)<<endl;
+					cout<<"Job: "<<sqlite3_column_text(res,2)<<endl;
+					cout<<"Mgr: "<<sqlite3_column_text(res,3)<<endl;
+					cout<<"Hiredate: "<<sqlite3_column_text(res,4)<<endl;
+					cout<<"Sal: "<<sqlite3_column_text(res,5)<<endl;
+					cout<<"Comm: "<<sqlite3_column_text(res,6)<<endl;
+					cout<<"Deptno: "<<sqlite3_column_text(res,7)<<endl<<endl<<endl;
+				}	
+				sqlite3_close(conn);
 				break;
 			}
 			case 5:{
-				
+				string id;
+				cout<<"Ingrese id: ";
+				cin>>id;
 				break;
 			}
 			case 6:{
