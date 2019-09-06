@@ -210,7 +210,26 @@ int main(int argc, char** argv) {
 				cin>>id;
 				
 				string comando;
-				comando = "select sal from emp where "
+				comando = "select sal from emp where mgr ='"+id+"'";
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_prepare_v2(conn,comando.c_str(),1000,&res,&tail);
+				int totalsalario;
+				totalsalario = 0;
+				int cont;
+				cont = 0;
+				int newsalario;
+				if(sqlite3_step(res) == SQLITE_ROW){
+					do{
+						cont++;
+						totalsalario += atoi((char*)sqlite3_column_text(res,0));
+					}while(sqlite3_step(res) == SQLITE_ROW);
+				}else{
+					
+				}
+				sqlite3_close(conn);
+				newsalario = (totalsalario/cont)*2;
+
+								
 				break;
 			}
 			case 6:{
