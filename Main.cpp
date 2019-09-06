@@ -229,7 +229,12 @@ int main(int argc, char** argv) {
 				sqlite3_close(conn);
 				newsalario = (totalsalario/cont)*2;
 
-								
+				//actualizar
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_exec(conn,
+				"update emp set sal='"+newsalario+"' where cuanta='"+id+"'"
+				,0,0,0);
+				sqlite3_close(conn);				
 				break;
 			}
 			case 6:{
