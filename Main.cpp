@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 	const char *tail;
 	while(true){
 		int opcion;
-		cout<<"1- Listar\n2- Agregar\n3- Eliminar\n4- Listar Jefe y Empleado\n5- Listar Salarb\n6- Empleados de departamento\n7- Salir\nIngrese opcion: ";
+		cout<<"1- Listar\n2- Agregar\n3- Eliminar\n4- Listar Jefe y Empleado\n5- Actualizar Salario\n6- Empleados de departamento\n7- Salir\nIngrese opcion: ";
 		cin>>opcion;
 		switch(opcion){
 			case 1:{				
@@ -229,14 +229,23 @@ int main(int argc, char** argv) {
 				sqlite3_close(conn);
 				newsalario = (totalsalario/cont)*2;
 
+				cout<<newsalario<<endl;
+				//int a = 10;
+				stringstream ss;
+				ss << newsalario;
+				string str = ss.str();
 				
 				string h;
-				h = "update emp set sal='"+newsalario+"' where cuanta='"+id+"'";
+				h = "update emp set sal = '";
+				h += str;
+				h += "' where empno ='";
+				h += id;
+				h += "'";
+				
+				cout<<h<<endl;
 				//actualizar
 				error=sqlite3_open("oracle-sample.db",&conn);
-				error=sqlite3_exec(conn,
-				h.c_str();
-				,0,0,0);
+				error=sqlite3_exec(conn,h.c_str(),0,0,0);
 				sqlite3_close(conn);				
 				break;
 			}
