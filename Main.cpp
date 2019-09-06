@@ -250,6 +250,38 @@ int main(int argc, char** argv) {
 				break;
 			}
 			case 6:{
+				string id;
+				cout<<"Ingrese el id: ";
+				cin>>id;
+				
+				string h;
+				h = "select dname from dept where deptno = '"+id+"'";
+				
+				
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_prepare_v2(conn,
+				        h.c_str(),1000,&res,&tail);
+				
+				if(sqlite3_step(res) == SQLITE_ROW){
+					cout<<sqlite3_column_text(res,0)<<endl;
+				}else{
+					cout<<"No exite"<<endl;
+				}
+					
+				sqlite3_close(conn);
+				
+				string j = "select * from emp where deptno='"+id+"'";
+				error=sqlite3_open("oracle-sample.db",&conn);
+				error=sqlite3_prepare_v2(conn,j.c_str(),1000,&res,&tail);
+				int total;
+				while(sqlite3_step(res) == SQLITE_ROW){
+					cout<<sqlite3_column_text(res,0)<<setw(10);
+					cout<<sqlite3_column_text(res,5)<<endl;
+					total +=atoi((char*)sqlite3_column_text(res,5));	
+				}	
+				sqlite3_close(conn);
+				cout<<"El total de los salarios: "<<total<<endl;
+				break;
 				
 				break;
 			}
