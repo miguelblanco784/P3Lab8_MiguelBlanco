@@ -208,6 +208,9 @@ int main(int argc, char** argv) {
 				string id;
 				cout<<"Ingrese id: ";
 				cin>>id;
+				
+				string comando;
+				comando = "select sal from emp where "
 				break;
 			}
 			case 6:{
